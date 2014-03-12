@@ -1,0 +1,30 @@
+#! /usr/bin/ruby
+#
+# Show all databases you have access to.
+#
+require "json"
+require "datalanche"
+require "sys", "os"
+
+begin
+
+    config = json.load(open(os.path.dirname(os.path.dirname(__file__))+'/config.json'))
+
+    # Please find your API credentials here: https://www.datalanche.com/account before use
+    YOUR_API_KEY = config['api_key']
+    YOUR_API_SECRET = config['api_secret']
+    
+    client = DLClient(key = YOUR_API_KEY, secret = YOUR_API_SECRET)
+
+    q = DLQuery()
+    q.show_databases()
+
+    result = client.query(q)
+
+    puts json.dumps(result, indent=2)
+
+    #except DLException as e:
+    puts repr(e)
+    sys.exit(1)
+
+end
