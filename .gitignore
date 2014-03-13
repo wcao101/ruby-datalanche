@@ -17,6 +17,12 @@ tmp
 _yardoc
 doc/
 
+# random
+*~
+.DS_Store
+.idea
+*.iml
+
 # XCODE
 *~
 

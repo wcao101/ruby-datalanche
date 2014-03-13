@@ -1,34 +1,35 @@
 # -*- coding: utf-8 -*-
 
-import json
-import requests
-import collections
-import urllib
-from .exception import DLException
-from requests.auth import HTTPBasicAuth
+require "rubygems"
+require "json"
+require "requests"
+require "collections"
+require "urllib"
+#from .exception import DLException
+#from requests.auth import HTTPBasicAuth
 
 class DLClient(object):
-    def __init__(self, key = '', secret = '', host = None, port = None, verify_ssl = True):
-        self.auth_key = key
-        self.auth_secret = secret
-        self.client = requests.Session()
-        self.url = 'https://api.datalanche.com'
-        self.verify_ssl = verify_ssl
-        if host != None:
-            self.url = 'https://' + host
-        if port != None:
-            self.url = self.url + ':' + str(port)
+    def initialize(key = '', secret = '', host = None, port = None, verify_ssl = True):
+        @auth_key = key
+        @auth_secret = secret
+        @client = requests.Session()
+        @url = 'https://api.datalanche.com'
+        @verify_ssl = verify_ssl
+        if host != nil:
+            @url = 'https://' + host
+        if port != nil:
+            @url = self.url + ':' + str(port)
 
-    def key(self, key):
-        self.auth_key = key
+    def key(key):
+        @auth_key = key
 
-    def secret(self, secret):
-        self.auth_secret = secret
+    def secret(secret):
+        @auth_secret = secret
 
-    def get_debug_info(self, r):
-        info = collections.OrderedDict()
-
-        info['request'] = collections.OrderedDict()
+    def get_debug_info(r):
+        @info = {}
+      ########## stops here. Need to continue
+        info['request'] = {}
         info['request']['method'] = r.request.method
         info['request']['url'] = r.request.url
         info['request']['headers'] = r.request.headers
