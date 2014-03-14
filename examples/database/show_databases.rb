@@ -4,7 +4,7 @@
 #
 require "rubygems"
 require "json"
-# will install this module require "datalanche"
+require "../../datalanche/client.rb"
 # need to look for this module require "sys"
 
 begin
