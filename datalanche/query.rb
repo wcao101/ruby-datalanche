@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-class DLQuery(object):
+class DLQuery
 
-    def initialize(self, database = None)
+    def initialize(database = None)
         @params = Hash.new
         if database != None
             @params['database'] = database
@@ -206,7 +206,7 @@ class DLQuery(object):
         return self # method chaining
     end
 
-    def self.drop_column(column_name, cascade = False)
+    def self.drop_column(column_name, cascade = false)
         if @params.has_key?('drop_columns')
             @params['drop_columns'] = Array.new
         end
@@ -218,56 +218,64 @@ class DLQuery(object):
         return self # method chaining
     end
 
-############################################################# will be finished on monday MAR 17th 2014 ###################
     # TODO: drop_constraint
 
-    def rename_column(self, column_name, new_name):
-        if 'rename_columns' not in self.params:
-            self.params['rename_columns'] = collections.OrderedDict()
-        self.params['rename_columns'][column_name] = new_name
+    def self.rename_column(column_name, new_name)
+        if @params.has_key?('rename_columns')
+            @params['rename_columns'] = Hash.new
+        @params['rename_columns'][column_name] = new_name
         return self # method chaining
+    end
 
     # TODO: rename_constraint
 
-    def set_schema(self, schema_name):
-        self.params['set_schema'] = schema_name
+    def self.set_schema(schema_name)
+        @params['set_schema'] = schema_name
         return self # method chaining
+    end
 
     #
     # CREATE INDEX
     #
 
-    def create_index(self, index_name):
-        self.params['create_index'] = index_name
+    def self.create_index(index_name)
+        @params['create_index'] = index_name
         return self # method chaining
+    end
 
-    def on_table(self, tableName):
-        self.params['on_table'] = tableName
+    def self.on_table(tableName)
+        @params['on_table'] = tableName
         return self # method chaining
+    end
 
-    def unique(self, boolean):
-        self.params['unique'] = boolean
+    def self.unique(boolean)
+        @params['unique'] = boolean
         return self # method chaining
+    end
 
-    def using_method(self, text):
-        self.params['using_method'] = text
+    def self.using_method(text)
+        @params['using_method'] = text
         return self # method chaining
+    end
 
     #
     # CREATE SCHEMA
     #
 
-    def create_schema(self, schema_name):
-        self.params['create_schema'] = schema_name
+    def self.create_schema(schema_name)
+        @params['create_schema'] = schema_name
         return self # method chaining
+    end
 
     #
     # CREATE TABLE
     #
 
-    def create_table(self, table_name):
-        self.params['create_table'] = table_name
+    def self.create_table(table_name)
+        @params['create_table'] = table_name
         return self # method chaining
+    end
+
 
     # TODO: constraints
 
@@ -275,148 +283,172 @@ class DLQuery(object):
     # DELETE
     #
 
-    def delete_from(self, table_name):
-        self.params['delete_from'] = table_name
+    def self.delete_from(table_name)
+        @params['delete_from'] = table_name
         return self # method chaining
+    end
 
     #
     # DESCRIBE DATABASE
     #
 
-    def describe_database(self, database_name):
-        self.params['describe_database'] = database_name
+    def self.describe_database(database_name)
+        @params['describe_database'] = database_name
         return self # method chaining
+    end
 
     #
     # DESCRIBE SCHEMA
     #
 
-    def describe_schema(self, schema_name):
-        self.params['describe_schema'] = schema_name
+    def self.describe_schema(schema_name)
+        @params['describe_schema'] = schema_name
         return self # method chaining
+    end
 
     #
     # DESCRIBE TABLE
     #
 
-    def describe_table(self, table_name):
-        self.params['describe_table'] = table_name
+    def self.describe_table(table_name)
+        @params['describe_table'] = table_name
         return self # method chaining
+    end
 
     #
     # DROP INDEX
     #
 
-    def drop_index(self, index_name):
-        self.params['drop_index'] = index_name
+    def self.drop_index(index_name)
+        @params['drop_index'] = index_name
         return self # method chaining
+    end
 
     #
     # DROP SCHEMA
     #
 
-    def drop_schema(self, schema_name):
-        self.params['drop_schema'] = schema_name
+    def self.drop_schema(schema_name)
+        @params['drop_schema'] = schema_name
         return self # method chaining
+    end
 
     #
     # DROP TABLE
     #
 
-    def drop_table(self, table_name):
-        self.params['drop_table'] = table_name
+    def self.drop_table(table_name)
+        @params['drop_table'] = table_name
         return self # method chaining
+    end
 
     #
     # INSERT
     #
 
-    def insert_into(self, table_name):
-        self.params['insert_into'] = table_name
+    def self.insert_into(table_name)
+        @params['insert_into'] = table_name
         return self # method chaining
+    end
 
-    def values(self, rows):
-        self.params['values'] = rows
+    def self.values(rows)
+        @params['values'] = rows
         return self # method chaining
+    end
 
     #
     # SELECT
     #
 
-    def select(self, columns):
+    def self.select(columns)
         if columns == '*':
             raise Exception('please use select_all() instead of select("*")')
-        self.params['select'] = columns
+        @params['select'] = columns
         return self # method chaining
+    end
 
-    def select_all(self):
-        self.params['select'] = True
+    def self.select_all()
+        @params['select'] = true
         return self # method chaining
+    end
 
-    def distinct(self, boolean):
-        self.params['distinct'] = boolean
+    def self.distinct(boolean)
+        @params['distinct'] = boolean
         return self # method chaining
+    end
 
-    def from_tables(self, tables):
-        self.params['from'] = tables
+    def self.from_tables(tables)
+        @params['from'] = tables
         return self # method chaining
+    end
 
-    def group_by(self, columns):
-        self.params['group_by'] = columns
+    def self.group_by(columns)
+        @params['group_by'] = columns
         return self # method chaining
+    end
 
-    def having(self, expression):
-        self.params['having'] = expression
+    def self.having(expression)
+        @params['having'] = expression
         return self # method chaining
+    end
 
-    def limit(self, integer):
-        self.params['limit'] = integer
+    def self.limit(integer)
+        @params['limit'] = integer
         return self # method chaining
+    end
 
-    def offset(self, integer):
-        self.params['offset'] = integer
+    def self.offset(integer)
+        @params['offset'] = integer
         return self # method chaining
+    end
 
-    def order_by(self, expr_array):
-        self.params['order_by'] = expr_array
+    def self.order_by(expr_array)
+        @params['order_by'] = expr_array
         return self # method chaining
+    end
 
-    def search(self, query_text):
-        self.params['search'] = query_text
+    def self.search(query_text)
+        @params['search'] = query_text
         return self # method chaining
+    end
 
     #
     # SHOW DATABASES
     #
 
-    def show_databases(self):
-        self.params['show_databases'] = True
+    def self.show_databases()
+        @params['show_databases'] = true
         return self # method chaining
+    end
 
     #
     # SHOW SCHEMAS
     #
 
-    def show_schemas(self):
-        self.params['show_schemas'] = True
+    def self.show_schemas()
+        @params['show_schemas'] = true
         return self # method chaining
+    end
 
     #
     # SHOW TABLES
     #
 
-    def show_tables(self):
-        self.params['show_tables'] = True
+    def self.show_tables()
+        @params['show_tables'] = true
         return self # method chaining
+    end
 
     #
     # UPDATE
     #
 
-    def update(self, table_name):
-        self.params['update'] = table_name
+    def self.update(table_name)
+        @params['update'] = table_name
         return self # method chaining
+    end
 
-    def set(self, kv_pairs):
-        self.params['set'] = kv_pairs
-        return self # method chaining        
+    def self.set(kv_pairs)
+        @params['set'] = kv_pairs
+        return self # method chaining
+    end
