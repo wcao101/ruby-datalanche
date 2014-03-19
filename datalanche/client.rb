@@ -3,10 +3,10 @@
 require "rubygems"
 require "json"
 #require "requests" will be done when implementing HTTP REQUEST
-require "collections"
-require "url"
-#from .exception import DLException
 #from requests.auth import HTTPBasicAuth
+require "url"
+require "./exception"
+
 
 class DLClient
     def initialize(key = '', secret = '', host = None, port = None, verify_ssl = True)
