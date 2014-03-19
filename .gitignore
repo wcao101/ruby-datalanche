@@ -26,5 +26,6 @@ doc/
 # XCODE
 *~
 
-# Emacs
-#*#
+# emacs
+[#]*[#]
+.\#*
