@@ -5,6 +5,8 @@
 require "rubygems"
 require "json"
 require "../../datalanche/client.rb"
+require "../../datalanche/query.rb"
+
 # need to look for this module require "sys"
 
 begin
@@ -20,14 +22,14 @@ begin
   # #### this region will is about the datalanche module, and will be resumed after
   # module is available
   # and the exception handle will be recovered.
-    # client = DLClient(key = YOUR_API_KEY, secret = YOUR_API_SECRET)
+  client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET)
 
-    # q = DLQuery()
-    # q.show_databases()
+  q = DLQuery.new()
+  q.show_databases()
 
-    # result = client.query(q)
+  result = client.query(q)
 
-    # puts json.dumps(result, indent=2)
+  puts json.dumps(result, indent=2)
 
     # #except DLException as e:
     # puts repr(e)

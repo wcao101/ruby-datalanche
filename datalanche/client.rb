@@ -2,17 +2,16 @@
 
 require "rubygems"
 require "json"
-#require "requests" will be done when implementing HTTP REQUEST
-#from requests.auth import HTTPBasicAuth
-require "url"
-require "./exception"
+require "net/http"
+require "uri"
+#require "../../datalanche/exception"
 
 
 class DLClient
-    def initialize(key = '', secret = '', host = None, port = None, verify_ssl = True)
+    def initialize(key, secret, host = nil, port = nil, verify_ssl = true)
         @auth_key = key
         @auth_secret = secret
-        @client = requests.Session()
+        @client = Net::HTTP::Post
         @url = 'https://api.datalanche.com'
         @verify_ssl = verify_ssl
         if host != nil
@@ -20,19 +19,19 @@ class DLClient
         end
 
         if port != nil
-            @url = self.url + ':' + str(port)
+            @url = @url + ':' + str(port)
         end
     end
 
-    def self.key(key)
+    def key(key)
         @auth_key = key
     end
 
-    def self.secret(secret)
+    def secret(secret)
         @auth_secret = secret
     end
 
-    def self.get_debug_info(r)
+    def get_debug_info(r)
         info = Hash.new
 
         info['request'] = Hash.new
@@ -48,36 +47,36 @@ class DLClient
         return info
     end
 
-    def self.query(q = None)
-        if q == None
-            raise Exception('query == None')
+    def query(q = nil)
+        if q == nil
+            raise Exception('query == nil')
         end
 
-        params = Hash.new(q.params)
+        params = {}
+        params = q.params
 
         url = @url
 
         if params.has_key?('database')
-            url = url + '/' + urllib.quote_plus(str(params['database']))
-            params.delete['database']
+            url = url + '/' + URI.parse(str(params['database']))
+            params.delete('database')
         end
 
-        url = url + '/query'
-        
-        r = @client.post(
-            url = url,
-            #auth = HTTPBasicAuth(self.auth_key, self.auth_secret), # ALL HTTP OBJECT is commented out before the file able to be compiled.
-            headers = {
-                'Accept-Encoding'=>'gzip',
-                'Content-Type'=>'application/json',
-                'User-Agent'=>'Datalanche Python Client'
-            },
-            data = json.dumps(params),
-            verify = @verify_ssl
-        )
+        url = URI.parse(url + '/query')
+
+        req = @client.new(url.path, initheader = {
+                                                    'Accept-Encoding'=>'gzip',
+                                                    'Content-Type'=>'application/json',
+                                                    'User-Agent'=>'Datalanche Ruby Client'
+                                                 } )
+        req.basic_auth(@auth_key, @auth_secret)
+        req.use_ssl = @verify_ssl
+        req.form_data(Json.dump(params))
+
+        res = https.request(req)
 
         result = Hash.new
-        debug_info = self.get_debug_info(r)
+        debug_info = self.get_debug_info(res)
 
 #        try: the exception handling will be implemented later after the HTTP OBJECT is done.!!
         result['data'] = r.json(object_pairs_hook = Hash.new)            
@@ -87,7 +86,7 @@ class DLClient
         result['response'] = debug_info['response']
         result['request'] = debug_info['request']
 
-        if not 200 <= r.status_code < 300
+        if not 200 <= res.status_code < 300
             raise DLException(r.status_code, result['data'], debug_info)
         end
 
