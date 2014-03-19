@@ -2,9 +2,9 @@
 
 class DLQuery
 
-    def initialize(database = None)
+    def initialize(database = nil)
         @params = Hash.new
-        if database != None
+        if database != nil
             @params['database'] = database
         end
     end
@@ -202,6 +202,7 @@ class DLQuery
         if @params.has_key?('alter_columns')
             @params['alter_columns'] = Hash.new
         end
+
         @params['alter_columns'][column_name] = attributes
         return self # method chaining
     end
@@ -223,6 +224,8 @@ class DLQuery
     def self.rename_column(column_name, new_name)
         if @params.has_key?('rename_columns')
             @params['rename_columns'] = Hash.new
+        end
+
         @params['rename_columns'][column_name] = new_name
         return self # method chaining
     end
@@ -363,6 +366,8 @@ class DLQuery
     def self.select(columns)
         if columns == '*':
             raise Exception('please use select_all() instead of select("*")')
+        end
+
         @params['select'] = columns
         return self # method chaining
     end
@@ -416,7 +421,7 @@ class DLQuery
     # SHOW DATABASES
     #
 
-    def self.show_databases()
+    def show_databases()
         @params['show_databases'] = true
         return self # method chaining
     end
@@ -452,3 +457,4 @@ class DLQuery
         @params['set'] = kv_pairs
         return self # method chaining
     end
+end
