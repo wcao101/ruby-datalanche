@@ -2,6 +2,10 @@
 
 class DLQuery
 
+    # return params
+    attr_reader :params
+
+    # initialize parameters
     def initialize(database = nil)
         @params = Hash.new
         if database != nil

@@ -13,6 +13,16 @@ begin
 
   config = JSON.load(open('../config.json'))
 
+
+    # Load config.json for setting API_KEY, API_SECRET, host, port and verify_ssh
+    # change the settings in config.json before running examples
+
+    if config['verify_ssl'] == '0' or config['verify_ssl'] == 'false'
+        config['verify_ssl'] = false
+    else
+        config['verify_ssl'] = true
+    end
+
   # Please find your API credentials here: https://www.datalanche.com/account before use
   YOUR_API_KEY = config['api_key']
   YOUR_API_SECRET = config['api_secret']
@@ -29,7 +39,7 @@ begin
 
   result = client.query(q)
 
-  puts json.dumps(result, indent=2)
+  puts result #Json.dumps(result, indent=2)
 
     # #except DLException as e:
     # puts repr(e)
