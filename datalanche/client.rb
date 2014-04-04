@@ -12,18 +12,19 @@ require "../../datalanche/query.rb"
 class DLClient
     def initialize(key, secret, host = nil, port = nil, verify_ssl = true)
 
+        @auth_key = key
+        @auth_secret = secret
+        @url = 'https://api.datalanche.com'
+        @verify_ssl = verify_ssl
+
+
         if host != nil
             @url = 'https://' + host
         end
 
         if port != nil
-            @url = @url + ':' + str(port)
+            @url = @url + ':' + port.to_s()
         end
-
-        @auth_key = key
-        @auth_secret = secret
-        @url = 'https://api.datalanche.com'
-        @verify_ssl = verify_ssl
 
     end
 
@@ -60,7 +61,7 @@ class DLClient
         params = {}
         params = params.merge(q.params)
 
-        puts "the params are: #{params}"
+        puts "the params are: #{q.params}"
 
         url = @url
 
@@ -70,25 +71,31 @@ class DLClient
         end
 
         url = URI.parse(url + '/query')
-
-
-        https = Net::HTTP.new(url.host, url.port)
         
-        https.use_ssl = @verify_ssl
+        header = {
+                    'Accept-Encoding'=>'gzip',
+                    'Content-Type'=>'application/json',
+                    'User-Agent'=>'Datalanche Ruby Client'
+                }
 
-        
-        req = Net::HTTP::Post.new(url.path, initheader = {
-                                                    'Accept-Encoding'=>'gzip',
-                                                    'Content-Type'=>'application/json',
-                                                    'User-Agent'=>'Datalanche Ruby Client'
-                                                 } )
-        req.basic_auth(@auth_key, @auth_secret)
-        req.body = "[#{params.to_json}]"
+        puts "url host is: #{url.host}"
+        puts "url port is: #{url.port}"        
+        puts "verify_ssl is: #{@verify_ssl}"
+        #https = Net::HTTP.new(url.host, url.port)
+        req = Net::HTTP::Post.new(url.path)
+        req.basic_auth @auth_key, @auth_secret
+
+        req.form_data(params, header)
+
+        resp = Net::HTTP.new(url.host, url.port)
+        resp.use_ssl = @verify_ssl
+        resp.ssl_version="SSLv3"
+        resp.start {|http| http.request(req) }
+
+        resp.body = "#{params.to_json}"
 
         ## test the request body
-        puts "the request body is: #{req.body}"
-
-        res = https.request(req)
+        puts "the request body is: #{resp.body}"
 
         result = Hash.new
         debug_info = self.get_debug_info(res)

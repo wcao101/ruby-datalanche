@@ -32,7 +32,7 @@ begin
   # #### this region will is about the datalanche module, and will be resumed after
   # module is available
   # and the exception handle will be recovered.
-  client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET)
+  client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
 
   q = DLQuery.new()
   q.show_databases()
