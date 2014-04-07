@@ -70,7 +70,7 @@ class DLClient
             params.delete('database')
         end
 
-        url = URI.parse(url + '/query')
+        url = URI.parse(URI.encode(url + '/query'))
         
         header = {
                     'Accept-Encoding'=>'gzip',
@@ -82,20 +82,19 @@ class DLClient
         puts "url port is: #{url.port}"        
         puts "verify_ssl is: #{@verify_ssl}"
         #https = Net::HTTP.new(url.host, url.port)
-        req = Net::HTTP::Post.new(url.path)
+        req = Net::HTTP::Post.new(url.request_uri)
         req.basic_auth @auth_key, @auth_secret
 
-        req.form_data(params, header)
+        req.set_form_data(params, header)
 
         resp = Net::HTTP.new(url.host, url.port)
-        resp.use_ssl = @verify_ssl
+        resp.use_ssl = true
         resp.ssl_version="SSLv3"
-        resp.start {|http| http.request(req) }
-
-        resp.body = "#{params.to_json}"
+        resp.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        response = resp.start {|http| http.request(req) }
 
         ## test the request body
-        puts "the request body is: #{resp.body}"
+        puts "the request body is: #{response.body}"
 
         result = Hash.new
         debug_info = self.get_debug_info(res)
