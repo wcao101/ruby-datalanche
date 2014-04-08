@@ -74,6 +74,10 @@ class DLClient
         
         req = Net::HTTP::Post.new(url.path, header)
         req.basic_auth @auth_key, @auth_secret
+
+        puts "the api-key is: #{@auth_key}"
+        puts "the api_secret is: #{@auth_secret}"
+
         https = Net::HTTP.new(url.host,url.port)
         https.use_ssl = true
         https.verify_mode = OpenSSL::SSL::VERIFY_NONE
