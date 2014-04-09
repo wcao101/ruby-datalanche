@@ -37,9 +37,10 @@ begin
   q = DLQuery.new()
   q.show_databases()
 
-  result = client.query(q)
+    result = client.query(q)
 
-  puts result #Json.dumps(result, indent=2)
+    puts JSON.pretty_generate(result)
+#  puts "the data is:: ", JSON.dump(result) #Json.dumps(result, indent=2)
 
     # #except DLException as e:
     # puts repr(e)

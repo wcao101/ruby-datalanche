@@ -4,6 +4,7 @@ require "rubygems"
 require "json"
 require "net/http"
 require "net/https"
+require "zlib"
 require "uri"
 require "../../datalanche/query.rb"
 #require "../../datalanche/exception"
@@ -34,18 +35,19 @@ class DLClient
         @auth_secret = secret
     end
 
-    def get_debug_info(r)
+    def get_debug_info(res,req)
         info = Hash.new
 
         info['request'] = Hash.new
-        info['request']['method'] = r #r.request.method
-        info['request']['url'] = r #r.request.url
-        info['request']['headers'] = r #r.request.headers
-        info['request']['body'] = r #r.request.body
+        info['request']['method'] = req['method']
+        info['request']['url'] = req['url']
+        info['request']['headers'] = req['headers']
+        info['request']['body'] = req['body']
 
         info['response'] = Hash.new
-        info['response']['http_status'] = r # r.status_code
-        info['response']['headers'] = r # r.headers
+        info['response']['http_status'] = res.code # r.status_code
+        info['response']['message'] = res.message
+        info['response']['http_version'] = res.http_version
 
         return info
     end
@@ -54,8 +56,6 @@ class DLClient
         if q == nil
             raise Exception('query == nil')
         end
-        
-        puts "the params are: #{q.params}"
 
         url = @url
 
@@ -67,7 +67,7 @@ class DLClient
         url = URI.parse(url + '/query')
 
         header = {
-                    'Accept-Encoding'=>'gzip',
+                   # 'Accept-Encoding'=>'gzip', # will be resumed after method of decompression of gzip found
                     'Content-Type'=>'application/json',
                     'User-Agent'=>'Datalanche Ruby Client'
                 }
@@ -84,38 +84,26 @@ class DLClient
         https.ssl_version = "SSLv3"
         req.body = "#{q.params.to_json}"
         res = https.request(req)
-        puts "Response #{res.code} #{res.message}: #{res.body}"
-
-
-        # req = Net::HTTP::Post.new(url.request_uri)
-
-
-        # req.post_form(JSON.dump(q.params), header)
-
-        # resp = Net::HTTP.new(url.host, url.port)
-        # resp.use_ssl = true
-        # resp.ssl_version = "SSLv3"
-        # resp.verify_mode = OpenSSL::SSL::VERIFY_NONE
-        # response = resp.start {|http| http.request(req)}
-
-        ## test the request body
-        puts "the request body is: #{response.body}"
 
         result = Hash.new
-        debug_info = self.get_debug_info(res)
+        req_info = Hash.new
 
-#        try: the exception handling will be implemented later after the HTTP OBJECT is done.!!
-        result['data'] = res #res.json(object_pairs_hook = Hash.new)            
-#        except Exception as e: exception handdling will be done after HTTP OBJECT
-            #result['data'] = None
+        req_info['headers'] = header
+        req_info['url'] = url
+        req_info['method'] = req.method
+        req_info['body'] = req.body
 
+        debug_info = self.get_debug_info(res,req_info)
+
+        result['data'] = JSON.parse(res.body)
         result['response'] = debug_info['response']
         result['request'] = debug_info['request']
 
-#        if not 200 <= res.status_code < 300
-            # raise DLException(r.status_code, result['data'], debug_info)
- #       end
-
+        status_code = res.code.to_i 
+        if not (200 <= status_code and status_code < 300)
+            raise DLException(r.status_code, result['data'], debug_info)
+        end
+        
         return result
     end
 end
