@@ -1,22 +1,32 @@
 # -*- coding: utf-8 -*-
 
-class DLException(Exception):
-    def __init__(self, status_code, body, debug_info):
-        self.request = debug_info['request']
-        self.response = debug_info['response']
-        self.response['body'] = body
-        self.error_message = body['message']
-        self.error_type = body['code']
-        self.status_code = status_code
+class DLException < Exception
 
+    attr_reader:status_code 
+    attr_reader:body
+    attr_reader:debug_info
+
+    def initialize(status_code, body, debug_info)
+
+        @request = debug_info['request']
+        @response = debug_info['response']
+        @response['body'] = body
+        @error_message = body
+        @error_type = body
+        @status_code = status_code
+    end
+
+
+    def return_exception
         exception = {
-            'status_code': self.status_code,
-            'error_message': self.error_message,
-            'error_type': self.error_type,
-            'request': self.request,
-            'response': self.response
+            'status_code' => @status_code,
+            'error_message' => @error_message,
+            'error_type' => @error_type,
+            'request' => @request,
+            'response' => @response
         }
-        Exception.__init__(self, exception)
-
+        return exception
+    end
+end
 
 

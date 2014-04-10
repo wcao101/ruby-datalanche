@@ -7,7 +7,7 @@ require "net/https"
 require "zlib"
 require "uri"
 require "../../datalanche/query.rb"
-#require "../../datalanche/exception"
+require "../../datalanche/exception.rb"
 
 class DLClient
     def initialize(key, secret, host = nil, port = nil, verify_ssl = true)
@@ -101,7 +101,7 @@ class DLClient
 
         status_code = res.code.to_i 
         if not (200 <= status_code and status_code < 300)
-            raise DLException(r.status_code, result['data'], debug_info)
+            raise DLException.new(res.code, result['data'], debug_info)
         end
         
         return result
