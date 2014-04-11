@@ -6,12 +6,10 @@ require "rubygems"
 require "json"
 require "../../datalanche/client.rb"
 require "../../datalanche/query.rb"
-require "../../datlanche/exception.rb"
-
-# need to look for this module require "sys"
+require "../../datalanche/exception.rb"
 
 begin
-    
+    # need to look for this module require "sys"
     config = JSON.load(open('../config.json'))
     
     
@@ -34,16 +32,15 @@ begin
     # module is available
     # and the exception handle will be recovered.
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
-
+    
     q = DLQuery.new()
     q.show_databases()
-
     result = client.query(q)
-
-    puts JSON.pretty_generate(result)
-
-    except DLException as e:
-    puts repr(e)
-    sys.exit(1)
-
+    
+    if result.status_code
+        puts JSON.pretty_generate(result)
+        exit(1)
+    else
+        puts JSON.pretty_generate(result)
+    end
 end
