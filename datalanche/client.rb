@@ -99,17 +99,12 @@ class DLClient
         result['response'] = debug_info['response']
         result['request'] = debug_info['request']
 
-        begin
-            status_code = res.code.to_i 
-            if not (200 <= status_code and status_code < 300)
-                raise DLException.new(res.code, result['data'], debug_info),"Http request error: "
-            end
-        rescue DLException => e
-            return e.detail
-        else
-            return result
+
+        status_code = res.code.to_i 
+        if not (200 <= status_code and status_code < 300)
+            raise DLException.new(res.code, result['data'], debug_info),"Http request error: "
         end
-        
+        return result
 
     end
 end

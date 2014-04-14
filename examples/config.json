@@ -1,8 +1,8 @@
 {
     "_comment": "Credentials for the Datalanche example user. Please change to your own credentials which can be found at https://www.datalanche.com/account",
 
-    "api_key": "vG2V7gTVTMaqDcJ7sJJ81w=",
-    "api_secret": "H1KjLaUhQrGEsY0Cdh/pRg==",
+    "api_key": "l3xrfLfHQfGGZa3UPG46KQ=",
+    "api_secret": "6lqNom5jQFa8f43/FcD5xw==",
     "host": "localhost",
     "port": "4001",
     "verify_ssl": "false"

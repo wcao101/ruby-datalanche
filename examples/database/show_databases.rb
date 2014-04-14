@@ -35,11 +35,11 @@ begin
     
     q = DLQuery.new()
     q.show_databases()
-    result = client.query(q)
-    
-    if result.status_code
-        puts JSON.pretty_generate(result)
-        exit(1)
+
+    begin
+        result = client.query(q)
+    rescue DLException => e
+        puts JSON.pretty_generate(e.detail)
     else
         puts JSON.pretty_generate(result)
     end

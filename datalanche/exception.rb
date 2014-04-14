@@ -9,7 +9,7 @@ class DLException < Exception
         @request = debug_info['request']
         @response = debug_info['response']
         @response['body'] = body
-        @error_message = body
+        @error_message = debug_info['response']['message']
         @error_type = body
         @status_code = status_code
 
