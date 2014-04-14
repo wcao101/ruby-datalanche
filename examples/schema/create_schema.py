@@ -25,8 +25,10 @@ begin
     
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
-    q = DLQuery.new()
-    q.show_databases()
+    q = DLQuery.new(database = 'my_database')
+    q.create_schema('my_schema')
+    q.description('my_schema description text')
+
 
     begin
         result = client.query(q)
@@ -35,5 +37,6 @@ begin
         exit(1)
     else
         puts JSON.pretty_generate(result)
+        put  "create_schema succeeded!\n"
     end
 end

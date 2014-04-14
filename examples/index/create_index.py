@@ -25,8 +25,12 @@ begin
     
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
-    q = DLQuery.new()
-    q.show_databases()
+    q = DLQuery.new(database = 'my_database')
+    q.create_index('my_index')
+    q.unique(True)
+    q.on_table('my_schema.my_table')
+    q.using_method('btree')
+    q.columns([ 'col1', 'col2' ])
 
     begin
         result = client.query(q)
@@ -35,5 +39,6 @@ begin
         exit(1)
     else
         puts JSON.pretty_generate(result)
+        puts "create_index succeeded!\n"
     end
 end

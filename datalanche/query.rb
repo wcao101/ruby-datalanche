@@ -17,27 +17,27 @@ class DLQuery
   # COMMON
   #
   
-  def self.cascade(boolean)
+  def cascade(boolean)
     @params['cascade'] = boolean
     return self # method chaining
   end
   
-  def self.columns(columns)
+  def columns(columns)
     @params['columns'] = columns
     return self # method chaining
   end
   
-  def self.description(text)
+  def description(text)
     @params['description'] = text
     return self # method chaining
   end
   
-  def self.rename_to(table_name)
+  def rename_to(table_name)
     @params['rename_to'] = table_name
     return self # method chaining
   end
   
-  def self.where(expression)
+  def where(expression)
     @params['where'] = expression
     return self # method chaining
   end
@@ -56,24 +56,24 @@ class DLQuery
   # q.expr(q.column("c1"), "$not", "$in", [1, 2, 3, 4])
   # q.expr(q.column("c1"), "=", 1, "$and", q.column("c2"), "=", 2)
   #
-  def self.expr(*args)
+  def expr(*args)
     # *args is a built-in Python variable which is a tuple of function args
     return { '$expr'=>list(args) }
   end
   
-  def self.alias(alias_name)
+  def alias(alias_name)
     return { '$alias'=>alias_name }
   end
   
-  def self.column(column_name)
+  def column(column_name)
     return { '$column'=>column_name }
   end
   
-  def self.literal(value)
+  def literal(value)
     return { '$literal'=>value }
   end
   
-  def self.table(table_name)
+  def table(table_name)
     return { '$table'=>table_name }
   end
   
@@ -89,31 +89,31 @@ class DLQuery
   # q.func("$count", "*")
   # q.func("$sum", q.column("c1"))
   #
-  def self.func(*args)
+  def func(*args)
     return { '$function'=>list(args) }
   end
   
-  def self.avg(*args)
+  def avg(*args)
     temp_args = [ '$avg' ] + list(args)
     return { '$function'=>temp_args }
   end
   
-  def self.count(*args)
+  def count(*args)
     temp_args = [ '$count' ] + list(args)
     return { '$function'=>temp_args }
   end
   
-  def self.max(*args)
+  def max(*args)
     temp_args = [ '$max' ] + list(args)
     return { '$function'=>temp_args }
   end
   
-  def self.min(*args)
+  def min(*args)
     temp_args = [ '$min' ] + list(args)
     return { '$function'=>temp_args }
   end
   
-  def self.sum(*args)
+  def sum(*args)
     temp_args = [ '$sum' ] + list(args)
     return { '$function'=>temp_args }
   end
@@ -122,12 +122,12 @@ class DLQuery
   # ALTER DATABASE
   #
   
-  def self.alter_database(database_name)
+  def alter_database(database_name)
     @params['alter_database'] = database_name
     return self # method chaining
   end
   
-  def self.add_collaborator(username, permission)
+  def add_collaborator(username, permission)
     if @params.has_key?('add_collaborators')
       @params['add_collaborators'] = Hase.new
     end
@@ -136,7 +136,7 @@ class DLQuery
     return self # method chaining
   end
   
-  def self.alter_collaborator(username, permission)
+  def alter_collaborator(username, permission)
     if @params.has_key?('alter_collaborators')
       @params['alter_collaborators'] = Hash.new
     end
@@ -145,7 +145,7 @@ class DLQuery
     return self # method chaining
   end
   
-  def self.drop_collaborator(username)
+  def drop_collaborator(username)
     if @params.has_key?('drop_collaborators')
       @params['drop_collaborators'] = Array.new
     end
@@ -154,12 +154,12 @@ class DLQuery
     return self # method chaining
   end
   
-  def self.is_private(boolean)
+  def is_private(boolean)
     @params['is_private'] = boolean
     return self # method chaining
   end
 
-  def self.max_size_gb(integer)
+  def max_size_gb(integer)
     @params['max_size_gb'] = integer
     return self # method chaining
   end
@@ -168,7 +168,7 @@ class DLQuery
   # ALTER INDEX
   #
   
-  def self.alter_index(index_name)
+  def alter_index(index_name)
     @params['alter_index'] = index_name
     return self # method chaining
   end
@@ -177,7 +177,7 @@ class DLQuery
   # ALTER SCHEMA
   #
   
-  def self.alter_schema(schema_name)
+  def alter_schema(schema_name)
     @params['alter_schema'] = schema_name
     return self # method chaining
   end
@@ -186,12 +186,12 @@ class DLQuery
   # ALTER TABLE
   #
   
-  def self.alter_table(table_name)
+  def alter_table(table_name)
     @params['alter_table'] = table_name
     return self # method chaining
   end
   
-  def self.add_column(column_name, attributes)
+  def add_column(column_name, attributes)
     if @params.has_key?('add_columns')
       @params['add_columns'] = Hash.new
     end
@@ -202,7 +202,7 @@ class DLQuery
   
   # TODO: add_constraint
   
-  def self.alter_column(column_name, attributes)
+  def alter_column(column_name, attributes)
     if @params.has_key?('alter_columns')
       @params['alter_columns'] = Hash.new
     end
@@ -211,7 +211,7 @@ class DLQuery
     return self # method chaining
   end
   
-  def self.drop_column(column_name, cascade = false)
+  def drop_column(column_name, cascade = false)
     if @params.has_key?('drop_columns')
       @params['drop_columns'] = Array.new
     end
@@ -225,7 +225,7 @@ class DLQuery
   
   # TODO: drop_constraint
 
-  def self.rename_column(column_name, new_name)
+  def rename_column(column_name, new_name)
     if @params.has_key?('rename_columns')
       @params['rename_columns'] = Hash.new
     end
@@ -236,7 +236,7 @@ class DLQuery
   
   # TODO: rename_constraint
   
-  def self.set_schema(schema_name)
+  def set_schema(schema_name)
     @params['set_schema'] = schema_name
     return self # method chaining
   end
@@ -245,22 +245,22 @@ class DLQuery
   # CREATE INDEX
   #
   
-  def self.create_index(index_name)
+  def create_index(index_name)
     @params['create_index'] = index_name
     return self # method chaining
   end
   
-  def self.on_table(tableName)
+  def on_table(tableName)
     @params['on_table'] = tableName
     return self # method chaining
   end
 
-  def self.unique(boolean)
+  def unique(boolean)
     @params['unique'] = boolean
     return self # method chaining
   end
   
-  def self.using_method(text)
+  def using_method(text)
     @params['using_method'] = text
     return self # method chaining
   end
@@ -269,7 +269,7 @@ class DLQuery
   # CREATE SCHEMA
   #
   
-  def self.create_schema(schema_name)
+  def create_schema(schema_name)
     @params['create_schema'] = schema_name
     return self # method chaining
   end
@@ -278,7 +278,7 @@ class DLQuery
   # CREATE TABLE
   #
   
-  def self.create_table(table_name)
+  def create_table(table_name)
     @params['create_table'] = table_name
     return self # method chaining
   end
@@ -290,7 +290,7 @@ class DLQuery
   # DELETE
   #
   
-  def self.delete_from(table_name)
+  def delete_from(table_name)
     @params['delete_from'] = table_name
     return self # method chaining
   end
@@ -299,7 +299,7 @@ class DLQuery
   # DESCRIBE DATABASE
   #
   
-  def self.describe_database(database_name)
+  def describe_database(database_name)
     @params['describe_database'] = database_name
     return self # method chaining
   end
@@ -308,7 +308,7 @@ class DLQuery
   # DESCRIBE SCHEMA
   #
   
-  def self.describe_schema(schema_name)
+  def describe_schema(schema_name)
     @params['describe_schema'] = schema_name
     return self # method chaining
   end
@@ -317,7 +317,7 @@ class DLQuery
   # DESCRIBE TABLE
   #
   
-  def self.describe_table(table_name)
+  def describe_table(table_name)
     @params['describe_table'] = table_name
     return self # method chaining
   end
@@ -326,7 +326,7 @@ class DLQuery
   # DROP INDEX
   #
   
-  def self.drop_index(index_name)
+  def drop_index(index_name)
     @params['drop_index'] = index_name
     return self # method chaining
   end
@@ -335,7 +335,7 @@ class DLQuery
   # DROP SCHEMA
   #
   
-  def self.drop_schema(schema_name)
+  def drop_schema(schema_name)
     @params['drop_schema'] = schema_name
     return self # method chaining
   end
@@ -344,7 +344,7 @@ class DLQuery
   # DROP TABLE
   #
   
-  def self.drop_table(table_name)
+  def drop_table(table_name)
     @params['drop_table'] = table_name
     return self # method chaining
   end
@@ -353,12 +353,12 @@ class DLQuery
   # INSERT
   #
   
-  def self.insert_into(table_name)
+  def insert_into(table_name)
     @params['insert_into'] = table_name
     return self # method chaining
   end
   
-  def self.values(rows)
+  def values(rows)
     @params['values'] = rows
     return self # method chaining
   end
@@ -367,7 +367,7 @@ class DLQuery
   # SELECT
   #
   
-  def self.select(columns)
+  def select(columns)
     if columns == '*'
       raise Exception('please use select_all() instead of select("*")')
     end
@@ -376,47 +376,47 @@ class DLQuery
     return self # method chaining
   end
   
-  def self.select_all()
+  def select_all()
     @params['select'] = true
     return self # method chaining
   end
   
-  def self.distinct(boolean)
+  def distinct(boolean)
     @params['distinct'] = boolean
     return self # method chaining
   end
   
-  def self.from_tables(tables)
+  def from_tables(tables)
     @params['from'] = tables
     return self # method chaining
   end
   
-  def self.group_by(columns)
+  def group_by(columns)
     @params['group_by'] = columns
     return self # method chaining
   end
   
-  def self.having(expression)
+  def having(expression)
     @params['having'] = expression
     return self # method chaining
   end
   
-  def self.limit(integer)
+  def limit(integer)
     @params['limit'] = integer
         return self # method chaining
   end
   
-    def self.offset(integer)
+    def offset(integer)
       @params['offset'] = integer
       return self # method chaining
     end
     
-    def self.order_by(expr_array)
+    def order_by(expr_array)
       @params['order_by'] = expr_array
       return self # method chaining
     end
     
-    def self.search(query_text)
+    def search(query_text)
       @params['search'] = query_text
       return self # method chaining
     end
@@ -434,7 +434,7 @@ class DLQuery
     # SHOW SCHEMAS
     #
     
-    def self.show_schemas()
+    def show_schemas()
       @params['show_schemas'] = true
       return self # method chaining
     end
@@ -443,7 +443,7 @@ class DLQuery
     # SHOW TABLES
     #
     
-    def self.show_tables()
+    def show_tables()
       @params['show_tables'] = true
       return self # method chaining
     end
@@ -452,12 +452,12 @@ class DLQuery
     # UPDATE
     #
     
-    def self.update(table_name)
+    def update(table_name)
       @params['update'] = table_name
       return self # method chaining
     end
     
-    def self.set(kv_pairs)
+    def set(kv_pairs)
       @params['set'] = kv_pairs
       return self # method chaining
     end

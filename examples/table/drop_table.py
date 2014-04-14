@@ -1,6 +1,13 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Drop the given table. Must have admin access for the given database.
+#
+# equivalent SQL:
+# DROP TABLE my_schema.my_table CASCADE;
+#
+#! /usr/bin/python
+#
+# Show the given table's details. Must have read access for the given database.
 #
 require "rubygems"
 require "json"
@@ -25,8 +32,9 @@ begin
     
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
-    q = DLQuery.new()
-    q.show_databases()
+    q = DLQuery.new(database = 'my_database')
+    q.drop_table('my_schema.my_table')
+    q.cascade(True)
 
     begin
         result = client.query(q)
@@ -35,5 +43,6 @@ begin
         exit(1)
     else
         puts JSON.pretty_generate(result)
+        puts "drop_table succeeded!\n"
     end
 end

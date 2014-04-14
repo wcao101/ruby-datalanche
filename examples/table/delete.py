@@ -1,6 +1,9 @@
-#! /usr/bin/ruby
+#! /usr/bin/python
 #
-# Show all databases you have access to.
+# Delete rows from the given table. Must have write access for the given database.
+#
+# equivalent SQL:
+# DELETE FROM my_schema.my_table WHERE col3 = 'hello';
 #
 require "rubygems"
 require "json"
@@ -25,8 +28,9 @@ begin
     
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
-    q = DLQuery.new()
-    q.show_databases()
+    q = DLQuery.new(database = 'my_database')
+    q.delete_from('my_schema.my_table')
+    q.where(q.expr(q.column('col3'), '=', 'hello'));
 
     begin
         result = client.query(q)

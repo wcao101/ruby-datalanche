@@ -1,6 +1,6 @@
-#! /usr/bin/ruby
+#! /usr/bin/python
 #
-# Show all databases you have access to.
+# Show the given table's details. Must have read access for the given database.
 #
 require "rubygems"
 require "json"
@@ -25,8 +25,8 @@ begin
     
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
-    q = DLQuery.new()
-    q.show_databases()
+    q = DLQuery.new(database = 'my_database')
+    q.describe_table('my_schema.my_table')
 
     begin
         result = client.query(q)
