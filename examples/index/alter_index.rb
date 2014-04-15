@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Alter the given index's properties. Must have admin access for the given database.
+#
+# equivalent SQL:
+# ALTER INDEX my_schema.my_index RENAME TO my_new_index;
 #
 require "rubygems"
 require "json"

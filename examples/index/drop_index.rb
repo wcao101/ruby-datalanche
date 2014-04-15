@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Drop the given index. Must have admin access for the given database.
+#
+# equivalent SQL:
+# DROP INDEX my_schema.my_index CASCADE;
 #
 require "rubygems"
 require "json"

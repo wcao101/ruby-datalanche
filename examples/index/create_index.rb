@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Create an index on the given table. Must have admin access for the given database.
+#
+# equivalent SQL:
+# CREATE UNIQUE INDEX my_index ON my_schema.my_table USING btree (col1, col2);
 #
 require "rubygems"
 require "json"

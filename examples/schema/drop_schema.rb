@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Drop the given schema. Must have admin access for the given database.
+#
+# equivalent SQL:
+# DROP SCHEMA my_schema CASCADE;
 #
 require "rubygems"
 require "json"

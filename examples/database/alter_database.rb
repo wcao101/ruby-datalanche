@@ -1,8 +1,11 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Alter the given database's properties. Must have admin access for the database.
 #
-
+# equivalent SQL:
+# ALTER DATABASE my_database RENAME TO my_new_database;
+#
+#
 require "rubygems"
 require "json"
 Dir[File.dirname(__FILE__) + '/datalanche/*.rb'].each {|file| require file }

@@ -1,6 +1,6 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Show the given schema's details. Must have read access for the given database.
 #
 require "rubygems"
 require "json"

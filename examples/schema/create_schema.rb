@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Create the given schema. Must have admin access for the given database.
+#
+# equivalent SQL:
+# CREATE SCHEMA my_schema;
 #
 require "rubygems"
 require "json"

@@ -1,6 +1,6 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Show details of given database. Must have read access for the database.
 #
 
 require "rubygems"

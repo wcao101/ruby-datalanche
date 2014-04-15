@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/ruby
 #
 # Show the given table's details. Must have read access for the given database.
 #

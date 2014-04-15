@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/ruby
 #
 # Delete rows from the given table. Must have write access for the given database.
 #

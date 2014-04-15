@@ -1,6 +1,9 @@
 #! /usr/bin/ruby
 #
-# Show all databases you have access to.
+# Alter the given schema's properties. Must have admin access for the given database.
+#
+# equivalent SQL:
+# ALTER SCHEMA my_schema RENAME TO my_new_schema;
 #
 require "rubygems"
 require "json"
