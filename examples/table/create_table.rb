@@ -38,35 +38,35 @@ begin
     q.create_table('my_schema.my_table')
     q.description('my_table optional description text')
     q.columns({
-        'col1': {
-            'data_type': {
-                'name': 'uuid'
+        'col1' => {
+            'data_type' => {
+                'name' => 'uuid'
             },
-            'description': 'col1 description text',
-            'not_null': True
+            'description' => 'col1 description text',
+            'not_null' => true
         },
-        'col2': {
-            'data_type': {
-                'name': 'timestamptz'
+        'col2' => {
+            'data_type' => {
+                'name' => 'timestamptz'
             },
-            'description': 'col2 description text',
-            'default_value': None,
-            'not_null': False
+            'description' => 'col2 description text',
+            'default_value' => nil,
+            'not_null' => false
         },
-        'col3': {
-            'data_type': {
-                'name': 'text'
+        'col3' => {
+            'data_type' => {
+                'name' => 'text'
             },
-            'description': 'col3 description text',
-            'default_value': 'default text',
-            'not_null': True
+            'description' => 'col3 description text',
+            'default_value' => 'default text',
+            'not_null' => true
         },
-        'col4': {
-            'data_type': {
-                'name': 'varchar',
-                'args': [ 50 ]
+        'col4' => {
+            'data_type' => {
+                'name' => 'varchar',
+                'args' => [ 50 ]
             },
-            'description': 'col4 description text'
+            'description' => 'col4 description text'
         },
     })
 

@@ -1,0 +1,55 @@
+#!/bin/bash
+
+echo
+echo create a new table with the name of my_table
+ruby ./examples/table/create_table.rb
+
+echo
+echo insert data into my_table
+ruby ./examples/table/insert.rb
+
+echo rename the table my_table to t1
+# make sure the previous alterred schemas are cleaned up before examples testing
+curl https://localhost:4001/my_database/query -X POST -k -u "l3xrfLfHQfGGZa3UPG46KQ==:6lqNom5jQFa8f43/FcD5xw==" -H "Content-Type: application/json" -d '{
+                        "alter_table": "my_schema.my_table",
+			"rename_to": "t1"
+                      }'
+
+echo
+echo create a new table with the name of my_table
+ruby ./examples/table/create_table.rb
+
+echo
+echo insert data into my_table
+ruby ./examples/table/insert.rb
+
+echo rename the table my_table to t2
+# make sure the previous alterred schemas are cleaned up before examples testing
+curl https://localhost:4001/my_database/query -X POST -k -u "l3xrfLfHQfGGZa3UPG46KQ==:6lqNom5jQFa8f43/FcD5xw==" -H "Content-Type: application/json" -d '{
+                        "alter_table": "my_schema.my_table",
+			"rename_to": "t2"
+                      }'
+
+echo
+echo create a new table with the name of my_table
+ruby ./examples/table/create_table.rb
+
+echo
+echo insert data into my_table
+ruby ./examples/table/insert.rb
+
+echo
+echo rename the table my_table to t3
+# make sure the previous alterred schemas are cleaned up before examples testing
+curl https://localhost:4001/my_database/query -X POST -k -u "l3xrfLfHQfGGZa3UPG46KQ==:6lqNom5jQFa8f43/FcD5xw==" -H "Content-Type: application/json" -d '{
+                        "alter_table": "my_schema.my_table",
+			"rename_to": "t3"
+                      }'
+
+echo
+echo create a new table with the name of my_table
+ruby ./examples/table/create_table.rb
+
+echo
+echo insert data into my_table
+ruby ./examples/table/insert.rb

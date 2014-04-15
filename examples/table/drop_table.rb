@@ -34,7 +34,7 @@ begin
     
     q = DLQuery.new(database = 'my_database')
     q.drop_table('my_schema.my_table')
-    q.cascade(True)
+    q.cascade(true)
 
     begin
         result = client.query(q)

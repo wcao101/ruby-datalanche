@@ -31,7 +31,7 @@ begin
     q = DLQuery.new(database = 'my_database')
     q.update('my_schema.my_table')
     q.set({
-        'col3': 'hello world'
+        'col3' => 'hello world'
     })
     q.where(q.expr(q.column('col3'), '=', 'hello'))
 

@@ -60,7 +60,7 @@ class DLClient
         url = @url
 
         if q.params.has_key?('database')
-            url = url + '/' + URI.parse(str(params['database']))
+            url = url + '/' + q.params['database']
             q.params.delete('database')
         end
 
@@ -74,9 +74,6 @@ class DLClient
         
         req = Net::HTTP::Post.new(url.path, header)
         req.basic_auth @auth_key, @auth_secret
-
-        puts "the api-key is: #{@auth_key}"
-        puts "the api_secret is: #{@auth_secret}"
 
         https = Net::HTTP.new(url.host,url.port)
         https.use_ssl = true
@@ -95,7 +92,13 @@ class DLClient
 
         debug_info = self.get_debug_info(res,req_info)
 
-        result['data'] = JSON.parse(res.body)
+
+        begin
+            result['data'] = JSON.parse(res.body)
+        rescue  # in case the server does not return a body
+            result['data'] = nil
+        end
+
         result['response'] = debug_info['response']
         result['request'] = debug_info['request']
 

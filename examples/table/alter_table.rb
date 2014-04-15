@@ -47,16 +47,16 @@ begin
     q.rename_to('my_new_table')
     q.description('my_new_table description text')
     q.add_column('new_col', {
-        'data_type': {
-            'name': 'integer'
+        'data_type' => {
+            'name' => 'integer'
         },
-        'description': 'new_col description text'
+        'description' => 'new_col description text'
     })
     q.alter_column('col1', {
-        'data_type': {
-            'name': 'text'
+        'data_type' => {
+            'name' => 'text'
         },
-        'description': 'new col1 description text'
+        'description' => 'new col1 description text'
     })
     q.drop_column('col2')
     q.rename_column('col3', 'col_renamed')
