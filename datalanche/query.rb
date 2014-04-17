@@ -57,8 +57,8 @@ class DLQuery
   # q.expr(q.column("c1"), "=", 1, "$and", q.column("c2"), "=", 2)
   #
   def expr(*args)
-    # *args is a built-in Python variable which is a tuple of function args
-    return { '$expr'=>list(args) }
+    # *args is a built-in Ruby variable which is a tuple of function args
+    return { '$expr'=>array.new(args) }
   end
   
   def alias(alias_name)
@@ -81,7 +81,7 @@ class DLQuery
   # FUNCTIONS
   #
   
-  # NOTE: *args is a built-in Python variable which is a tuple of function args
+  # NOTE: *args is a built-in Ruby variable which is a tuple of function args
   
   #
   # usage examples

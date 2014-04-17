@@ -5,13 +5,14 @@
 # equivalent SQL:
 # CREATE SCHEMA my_schema;
 #
+current_dir = File.expand_path(File.dirname(__FILE__))
 require "rubygems"
 require "json"
-Dir[File.dirname(__FILE__) + '/datalanche/*.rb'].each {|file| require file }
+require File.dirname(__FILE__) + '/../../datalanche/datalanche_modu'
 
 begin
     # need to look for this module require "sys"
-    config = JSON.load(open('../config.json'))
+    config = JSON.load(open(current_dir + '/../config.json'))
     
     # Load config.json for setting API_KEY, API_SECRET, host, port and verify_ssh
     # change the settings in config.json before running examples
@@ -22,6 +23,7 @@ begin
         config['verify_ssl'] = true
     end
     
+    puts "the config is: #{config}"
     # Please find your API credentials here: https://www.datalanche.com/account before use
     YOUR_API_KEY = config['api_key']
     YOUR_API_SECRET = config['api_secret']
@@ -40,6 +42,6 @@ begin
         exit(1)
     else
         puts JSON.pretty_generate(result)
-        put  "create_schema succeeded!\n"
+        puts  "create_schema succeeded!\n"
     end
 end

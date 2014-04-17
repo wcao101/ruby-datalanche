@@ -6,8 +6,8 @@ require "net/http"
 require "net/https"
 require "zlib"
 require "uri"
-require "../../datalanche/query.rb"
-require "../../datalanche/exception.rb"
+require_relative "./query"
+require_relative "./exception"
 
 class DLClient
     def initialize(key, secret, host = nil, port = nil, verify_ssl = true)
