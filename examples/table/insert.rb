@@ -9,14 +9,14 @@
 #     ( '8bf38716-95ef-4a58-9c1b-b7c0f3185746', '2012-07-26T01:09:04.140Z', 'world' ),
 #     ( '45db0793-3c99-4e0d-b1d0-43ab875638d3', '2012-11-30T07:10:36.871Z', 'hello world' );
 #
-current_dir = File.expand_path(File.dirname(__FILE__))
+
 require "rubygems"
 require "json"
 require File.dirname(__FILE__) + '/../../datalanche/datalanche_modu'
 
 begin
     # need to look for this module require "sys"
-    config = JSON.load(open(current_dir + '/../config.json'))
+    config = JSON.load(open(File.expand_path(File.dirname(__FILE__)) + '/../config.json'))
     
     # Load config.json for setting API_KEY, API_SECRET, host, port and verify_ssh
     # change the settings in config.json before running examples

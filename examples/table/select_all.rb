@@ -9,14 +9,14 @@
 #     ORDER BY col1 ASC, col2 DESC
 #     OFFSET 0 LIMIT 10;
 #
-current_dir = File.expand_path(File.dirname(__FILE__))
+
 require "rubygems"
 require "json"
 require File.dirname(__FILE__) + '/../../datalanche/datalanche_modu'
 
 begin
     # need to look for this module require "sys"
-    config = JSON.load(open(current_dir + '/../config.json'))
+    config = JSON.load(open(File.expand_path(File.dirname(__FILE__)) + '/../config.json'))
     
     # Load config.json for setting API_KEY, API_SECRET, host, port and verify_ssh
     # change the settings in config.json before running examples
