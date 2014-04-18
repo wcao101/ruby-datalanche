@@ -33,7 +33,7 @@ begin
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET, host = config['host'], port = config['port'], verify_ssl = config['verify_ssl'])
     
     q = DLQuery.new(database = 'my_database')
-    q.select_all().from_tables('my_schema.my_table').search('hello world')
+    q.select_all().from('my_schema.my_table').search('hello world')
 
     begin
         result = client.query(q)

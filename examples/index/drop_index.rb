@@ -31,7 +31,7 @@ begin
     
     q = DLQuery.new(database = 'my_database')
     q.drop_index('my_schema.my_index')
-    q.cascade(True)
+    q.cascade(true)
 
     begin
         result = client.query(q)

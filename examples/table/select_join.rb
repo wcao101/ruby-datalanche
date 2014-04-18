@@ -33,7 +33,7 @@ begin
     
     q = DLQuery.new(database = 'my_database')
     q.select_all()
-    q.from_tables(q.expr(
+    q.from(q.expr(
         q.table('my_schema.t1'),
         '$join', q.table('my_schema.t2'), '$on', q.column('my_schema.t1.col1'), '=', q.column('my_schema.t2.col1'),
         '$join', q.table('my_schema.t3'), '$on', q.column('my_schema.t1.col1'), '=', q.column('my_schema.t3.col1')

@@ -35,8 +35,8 @@ begin
     
     q = DLQuery.new(database = 'my_database')
     q.select_all()
-    q.distinct(True)
-    q.from_tables('my_schema.my_table')
+    q.distinct(true)
+    q.from('my_schema.my_table')
     q.where(q.expr(q.column('col3'), '$like', '%hello%'))
     q.order_by([
         q.expr(q.column('col1'), '$asc'),
@@ -44,8 +44,6 @@ begin
     ])
     q.offset(0)
     q.limit(10)
-
-    result = client.query(q)
 
     begin
         result = client.query(q)

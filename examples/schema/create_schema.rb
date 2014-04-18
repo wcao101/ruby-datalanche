@@ -22,8 +22,7 @@ begin
     else
         config['verify_ssl'] = true
     end
-    
-    puts "the config is: #{config}"
+
     # Please find your API credentials here: https://www.datalanche.com/account before use
     YOUR_API_KEY = config['api_key']
     YOUR_API_SECRET = config['api_secret']

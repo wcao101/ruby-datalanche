@@ -16,6 +16,7 @@ class DLClient
         @auth_secret = secret
         @url = 'https://api.datalanche.com'
         @verify_ssl = verify_ssl
+        @verify_mode = OpenSSL::SSL::VERIFY_PEER
 
         if host != nil
             @url = 'https://' + host
@@ -23,6 +24,10 @@ class DLClient
 
         if port != nil
             @url = @url + ':' + port.to_s()
+        end
+
+        if !verify_ssl
+            @verify_mode = OpenSSL::SSL::VERIFY_NONE            
         end
 
     end
@@ -76,9 +81,10 @@ class DLClient
         req.basic_auth @auth_key, @auth_secret
 
         https = Net::HTTP.new(url.host,url.port)
-        https.use_ssl = true
-        https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        https.use_ssl = true 
+        https.verify_mode = @verify_mode
         https.ssl_version = "SSLv3"
+
         req.body = "#{q.params.to_json}"
         res = https.request(req)
 
@@ -88,10 +94,9 @@ class DLClient
         req_info['headers'] = header
         req_info['url'] = url
         req_info['method'] = req.method
-        req_info['body'] = req.body
+        req_info['body'] = JSON.parse(req.body)
 
         debug_info = self.get_debug_info(res,req_info)
-
 
         begin
             result['data'] = JSON.parse(res.body)
