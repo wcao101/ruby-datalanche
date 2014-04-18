@@ -1,8 +1,8 @@
-API_CREDENTIALS = l3xrfLfHQfGGZa3UPG46KQ==:6lqNom5jQFa8f43/FcD5xw==
-DB_QUERY_URL = https://localhost:4001/my_database/query 
-QUERY_URL = https://localhost:4001/query 
-CURL_OPTS_DROP_SCHEMA = -X POST -k -u "$(API_CREDENTIALS)" -H "Content-Type: application/json" -d '{ "drop_schema": "my_new_schema", "cascade": true }'
-CURL_OPTS_ALTER_DATABASE = -X POST -k -u "$(API_CREDENTIALS)" -H "Content-Type: application/json" -d '{ "alter_database": "my_new_database", "rename_to": "my_database"}'
+API_CREDENTIALS = GoyY7hI2S5igDS4pG2Vdyg==:e02C96sqR5mvUoQXkCC2Gg==
+DB_QUERY_URL = https://api.datalanche.com/my_database/query 
+QUERY_URL = https://api.datalanche.com/query 
+CURL_OPTS_DROP_SCHEMA = -X POST -u "$(API_CREDENTIALS)" -H "Content-Type: application/json" -d '{ "drop_schema": "my_new_schema", "cascade": true }'
+CURL_OPTS_ALTER_DATABASE = -X POST -u "$(API_CREDENTIALS)" -H "Content-Type: application/json" -d '{ "alter_database": "my_new_database", "rename_to": "my_database"}'
 
 #host api.datalanche.com
 all: target
@@ -65,7 +65,7 @@ test_selects: test_schema
 	ruby ./examples/table/select_all.rb
 
 	# testing select_search example
-	ruby ./examples/table/select_search.rb
+	ruby ./examples/table/search_table.rb
 
 	# testing select_join example
 	ruby ./examples/table/select_join.rb

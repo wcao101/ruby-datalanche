@@ -86,36 +86,27 @@ class DLQuery
     #
     # usage examples
     #
-    # q.func("$count", "*")
-    # q.func("$sum", q.column("c1"))
+    # q.count("*")
+    # q.sum(q.column("c1"))
     #
-    def func(*args)
-        return { '$function'=>list(args) }
-    end
-    
     def avg(*args)
-        temp_args = [ '$avg' ] + list(args)
-        return { '$function'=>temp_args }
+        return { '$avg'=>args }
     end
     
     def count(*args)
-        temp_args = [ '$count' ] + list(args)
-        return { '$function'=>temp_args }
+        return { '$count'=>args }
     end
     
     def max(*args)
-        temp_args = [ '$max' ] + list(args)
-        return { '$function'=>temp_args }
+        return { '$max'=>args }
     end
     
     def min(*args)
-        temp_args = [ '$min' ] + list(args)
-        return { '$function'=>temp_args }
+        return { '$min'=>args }
     end
     
     def sum(*args)
-        temp_args = [ '$sum' ] + list(args)
-        return { '$function'=>temp_args }
+        return { '$sum'=>args }
     end
     
     #

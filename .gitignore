@@ -29,3 +29,6 @@ doc/
 # emacs
 [#]*[#]
 .\#*
+
+# ignore the local test examples
+local-test-examples
