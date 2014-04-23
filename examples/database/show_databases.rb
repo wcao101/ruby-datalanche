@@ -5,7 +5,7 @@
 
 require "rubygems"
 require "json"
-require File.dirname(__FILE__) + '/../../datalanche/datalanche_modu'
+require "datalanche"
 
 begin
     config = JSON.load(open(File.expand_path(File.dirname(__FILE__)) + '/../config.json'))
