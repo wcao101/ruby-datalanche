@@ -47,7 +47,7 @@ begin
         'col4' => {
             'data_type' => {'varchar' => [50],},
             'description' => 'col4 description text'
-        },
+        }
     })
 
     begin

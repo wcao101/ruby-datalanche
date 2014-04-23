@@ -23,7 +23,7 @@ begin
     client = DLClient.new(key = YOUR_API_KEY, secret = YOUR_API_SECRET)
     
     q = DLQuery.new(database = 'my_database')
-    q.select_all().from('my_schema.my_table').search('hello world')
+    q.search('my_schema.my_table').with_query('hello world')
 
     begin
         result = client.query(q)

@@ -26,7 +26,7 @@ class DLClient
             @url = @url + ':' + port.to_s()
         end
 
-        if !verify_ssl
+        if verify_ssl != true
             @verify_mode = OpenSSL::SSL::VERIFY_NONE            
         end
 

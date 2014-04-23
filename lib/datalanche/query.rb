@@ -353,6 +353,20 @@ class DLQuery
         @params['values'] = rows
         return self # method chaining
     end
+
+    #
+    # SEARCH TABLE
+    #
+
+    def search(query_text)
+        @params['search'] = query_text
+        return self # method chaining
+    end
+
+    def with_query(query_text)
+        @params['with_query'] = query_text
+        return self # method chaining
+    end
     
     #
     # SELECT
@@ -404,11 +418,6 @@ class DLQuery
     
     def order_by(expr_array)
         @params['order_by'] = expr_array
-        return self # method chaining
-    end
-    
-    def search(query_text)
-        @params['search'] = query_text
         return self # method chaining
     end
 
