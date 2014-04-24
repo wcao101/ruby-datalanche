@@ -32,3 +32,6 @@ doc/
 
 # ignore the local test examples
 local-test-examples
+
+#ignore the datalanche-whatever version.gem file
+datalanche*.gem
