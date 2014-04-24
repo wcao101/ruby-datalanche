@@ -24,12 +24,11 @@ begin
     q.cascade(true)
 
     begin
-        result = client.query(q)
+        client.query(q)
     rescue DLException => e
         puts JSON.pretty_generate(e.detail)
         exit(1)
     else
-        puts JSON.pretty_generate(result)
         puts "drop_index succeeded!\n"   
     end
 end

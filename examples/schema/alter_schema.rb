@@ -25,12 +25,11 @@ begin
     q.description('my_new_schema description text')
 
     begin
-        result = client.query(q)
+        client.query(q)
     rescue DLException => e
         puts JSON.pretty_generate(e.detail)
         exit(1)
     else
-    puts JSON.pretty_generate(result)
     puts "alter_schema succeeded!\n"
     end
 end

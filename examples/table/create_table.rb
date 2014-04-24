@@ -51,12 +51,11 @@ begin
     })
 
     begin
-        result = client.query(q)
+        client.query(q)
     rescue DLException => e
         puts JSON.pretty_generate(e.detail)
         exit(1)
     else
-        puts JSON.pretty_generate(result)
         puts "create_table succeeded!\n"
     end
 end

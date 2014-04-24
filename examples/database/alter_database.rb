@@ -26,11 +26,11 @@ begin
     q.description('my_new_database description text')
     
     begin
-        result = client.query(q)
+        client.query(q)
     rescue DLException => e
         puts JSON.pretty_generate(e.detail)
         exit(1)
     else
-        puts JSON.pretty_generate(result)
+        puts "alter_database succeeded!\n"
     end
 end

@@ -24,12 +24,11 @@ begin
     q.rename_to('my_new_index')
 
     begin
-        result = client.query(q)
+        client.query(q)
     rescue DLException => e
         puts JSON.pretty_generate(e.detail)
         exit(1)
     else
-        puts JSON.pretty_generate(result)
         puts "alter_index succeeded!\n"
     end
 end
