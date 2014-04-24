@@ -7,11 +7,11 @@ Gem::Specification.new do |s|
   s.authors = ["Datalanche Inc."]
   s.date = %q{2014-04-23}
   s.description = %q{Official Ruby client for Datalanche.}
-  s.email = %q{support@datalanche.com}
+  s.email = %q{contact@datalanche.com}
   s.files = ["lib/datalanche.rb","lib/datalanche/client.rb", "lib/datalanche/query.rb", "lib/datalanche/exception.rb"]
   s.homepage = %q{https://api.datalanche.com}
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.2}
+  s.rubygems_version = %q{1.8.23}
   s.summary = %q{datalanche}
   s.license = 'MIT'
 
