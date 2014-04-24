@@ -358,7 +358,7 @@ class DLQuery
     # SEARCH TABLE
     #
 
-    def search(query_text)
+    def search_table(query_text)
         @params['search_table'] = query_text
         return self # method chaining
     end
