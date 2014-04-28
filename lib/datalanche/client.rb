@@ -4,8 +4,8 @@ require "rubygems"
 require "json"
 require "net/http"
 require "net/https"
-require "zlib"
 require "uri"
+require "zlib"
 require_relative "./query"
 require_relative "./exception"
 
@@ -40,6 +40,16 @@ class DLClient
         @auth_secret = secret
     end
 
+    def inflate(string)
+        # zstream = Zlib::Inflate.new
+        # buf = zstream.inflate(string)
+        # zstream.finish
+        # zstream.close
+        gz = Zlib::GzipReader.new(StringIO.new(string.to_s))    
+        xml = gz.read
+        return xml
+    end
+
     def get_debug_info(res,req)
         info = Hash.new
 
@@ -51,7 +61,8 @@ class DLClient
 
         info['response'] = Hash.new
         info['response']['http_status'] = res.code # r.status_code
-        info['response']['message'] = res.message
+        info['response']['content_type'] = res.header['content-type']
+        info['response']['content-encoding'] = res.header['content-encoding']      
         info['response']['http_version'] = res.http_version
 
         return info
@@ -72,7 +83,7 @@ class DLClient
         url = URI.parse(url + '/query')
 
         header = {
-                   # 'Accept-Encoding'=>'gzip', # will be resumed after method of decompression of gzip found
+                   'Accept-Encoding'=>'gzip', # will be resumed after method of decompression of gzip found
                     'Content-Type'=>'application/json',
                     'User-Agent'=>'Datalanche Ruby Client'
                 }
@@ -88,6 +99,10 @@ class DLClient
         req.body = "#{q.params.to_json}"
         res = https.request(req)
 
+        if (res.header['content-encoding'] == "gzip")
+            res.body = inflate(res.body)
+        end
+
         result = Hash.new
         req_info = Hash.new
 
@@ -98,7 +113,7 @@ class DLClient
 
         debug_info = self.get_debug_info(res,req_info)
 
-        begin
+        begin # CHECK IF THE BODY EXISTS OR NOT
             result['data'] = JSON.parse(res.body)
         rescue  # in case the server does not return a body
             result['data'] = nil
