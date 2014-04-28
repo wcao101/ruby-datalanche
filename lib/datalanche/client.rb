@@ -41,13 +41,9 @@ class DLClient
     end
 
     def inflate(string)
-        # zstream = Zlib::Inflate.new
-        # buf = zstream.inflate(string)
-        # zstream.finish
-        # zstream.close
-        gz = Zlib::GzipReader.new(StringIO.new(string.to_s))    
-        xml = gz.read
-        return xml
+        read_gz = Zlib::GzipReader.new(StringIO.new(string.to_s))    
+        buf = read_gz.read
+        return buf
     end
 
     def get_debug_info(res,req)
