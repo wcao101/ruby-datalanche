@@ -48,18 +48,27 @@ class DLClient
 
     def get_debug_info(res,req)
         info = Hash.new
+        info['request'] = Hash.new        
+        info['response'] = Hash.new
+        info['response']['headers'] = Hash.new
 
-        info['request'] = Hash.new
+        info['request']['headers'] = req['headers']
         info['request']['method'] = req['method']
         info['request']['url'] = req['url']
-        info['request']['headers'] = req['headers']
         info['request']['body'] = req['body']
 
-        info['response'] = Hash.new
+        res.header.each_header {
+            |key,value| info['response']['headers'][key] = value
+        }
+        info['response']['headers'].delete('connection')
+        info['response']['headers'].delete('transfer-eocoding')
+        info['response']['headers'].delete('date')
         info['response']['http_status'] = res.code # r.status_code
-        info['response']['content_type'] = res.header['content-type']
-        info['response']['content-encoding'] = res.header['content-encoding']      
         info['response']['http_version'] = res.http_version
+
+        info['response']['headers'].delete('connection')
+        info['response']['headers'].delete('transfer-encoding')
+        info['response']['headers'].delete('date')
 
         return info
     end
@@ -77,12 +86,12 @@ class DLClient
         end
 
         url = URI.parse(url + '/query')
-
+        
         header = {
-                   'Accept-Encoding'=>'gzip', # will be resumed after method of decompression of gzip found
-                    'Content-Type'=>'application/json',
-                    'User-Agent'=>'Datalanche Ruby Client'
-                }
+            'Accept-Encoding'=>'gzip',
+            'Content-Type'=>'application/json',
+            'User-Agent'=>'Datalanche Ruby Client'
+        }
         
         req = Net::HTTP::Post.new(url.path, header)
         req.basic_auth @auth_key, @auth_secret
@@ -108,11 +117,14 @@ class DLClient
         req_info['body'] = JSON.parse(req.body)
 
         debug_info = self.get_debug_info(res,req_info)
-
-        begin # CHECK IF THE BODY EXISTS OR NOT
-            result['data'] = JSON.parse(res.body)
-        rescue  # in case the server does not return a body
-            result['data'] = nil
+        
+        result['data'] = nil
+        if(res.body.size != 0)
+            begin # CHECK IF THE BODY EXISTS OR NOT
+                result['data'] = JSON.parse(res.body)
+            rescue  # in case the server does not return a body
+                result['data'] = nil
+            end
         end
 
         result['response'] = debug_info['response']
