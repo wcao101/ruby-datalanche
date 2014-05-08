@@ -119,10 +119,10 @@ class DLClient
         debug_info = self.get_debug_info(res,req_info)
         
         result['data'] = nil
-        if(res.body.size != 0)
-            begin # CHECK IF THE BODY EXISTS OR NOT
+        if(res.body.size != 0) # CHECK IF THE BODY EXISTS OR NOT
+            begin  # in case the server does not return a body
                 result['data'] = JSON.parse(res.body)
-            rescue  # in case the server does not return a body
+            rescue
                 result['data'] = nil
             end
         end
@@ -131,7 +131,7 @@ class DLClient
         result['request'] = debug_info['request']
 
 
-        status_code = res.code.to_i 
+        status_code = res.code.to_i
         if not (200 <= status_code and status_code < 300)
             raise DLException.new(res.code, result['data'], debug_info),"Http request error: "
         end
